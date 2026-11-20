@@ -1,4 +1,4 @@
-import mongoose, { Schema, Document } from "mongoose";
+import mongoose, { Schema, Document, Model } from "mongoose";
 
 export const SERVICE_CATEGORIES = [
   "Haircut & Styling",
@@ -53,5 +53,6 @@ const ServiceSchema = new Schema<IService>(
 
 ServiceSchema.index({ serviceName: "text", category: 1, status: 1, price: 1 });
 
-export const Service =
-  mongoose.models.Service || mongoose.model<IService>("Service", ServiceSchema);
+export const Service: Model<IService> =
+  (mongoose.models.Service as Model<IService>) ||
+  mongoose.model<IService>("Service", ServiceSchema);

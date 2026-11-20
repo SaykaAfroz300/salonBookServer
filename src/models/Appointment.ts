@@ -1,4 +1,4 @@
-import mongoose, { Schema, Document, Types } from "mongoose";
+import mongoose, { Schema, Document, Types, Model } from "mongoose";
 
 export const TIME_SLOTS = [
   "09:00 AM",
@@ -76,6 +76,6 @@ const AppointmentSchema = new Schema<IAppointment>(
 
 AppointmentSchema.index({ appointmentDate: 1, timeSlot: 1, status: 1 });
 
-export const Appointment =
-  mongoose.models.Appointment ||
+export const Appointment: Model<IAppointment> =
+  (mongoose.models.Appointment as Model<IAppointment>) ||
   mongoose.model<IAppointment>("Appointment", AppointmentSchema);

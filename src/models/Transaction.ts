@@ -1,4 +1,4 @@
-import mongoose, { Schema, Document, Types } from "mongoose";
+import mongoose, { Schema, Document, Types, Model } from "mongoose";
 
 export interface ITransaction extends Document {
   appointmentId: Types.ObjectId;
@@ -50,6 +50,6 @@ const TransactionSchema = new Schema<ITransaction>(
   }
 );
 
-export const Transaction =
-  mongoose.models.Transaction ||
+export const Transaction: Model<ITransaction> =
+  (mongoose.models.Transaction as Model<ITransaction>) ||
   mongoose.model<ITransaction>("Transaction", TransactionSchema);
