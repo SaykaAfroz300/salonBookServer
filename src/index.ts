@@ -97,9 +97,18 @@ const PORT = Number(process.env.PORT) || 5000;
 if (process.env.VERCEL !== "1") {
   connectDB()
     .then(() => {
-      app.listen(PORT, () => {
+      const server = app.listen(PORT, () => {
         console.log(`SalonBook server listening on http://localhost:${PORT}`);
       });
+
+      const shutdown = () => {
+        server.close(() => {
+          process.exit(0);
+        });
+      };
+
+      process.on("SIGINT", shutdown);
+      process.on("SIGTERM", shutdown);
     })
     .catch((err) => {
       console.error("Failed to start SalonBook server:", err);
